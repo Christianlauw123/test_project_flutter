@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_project/bottomNavBarItem.dart';
 import 'grid_home.dart';
-import 'menu_icon.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,7 +28,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
+  int _selectedIndex = 2;
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,23 +57,35 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: EdgeInsets.all(16),
               shape: CircleBorder(),
             ),
+            SizedBox(height: 15),
+            Text("Nama",style: TextStyle(fontWeight: FontWeight.bold)),
+            Text("Role"),
+            SizedBox(height: 100),
             new Expanded(
-              child: GridView.count(
-                crossAxisCount: 3,
-                children: List.generate(6, (index) {
-                  return Center(
-                    child: Text(
-                        'Item $index',
-                        style: Theme.of(context).textTheme.headline5
-                    ),
-                  );
-                }),
-              ),
+              child: gridHome
             ),
           ],
         ),
       ),
-      bottomNavigationBar: bottomNavBar
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.business),
+            label: 'Business',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.school),
+            label: 'School',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        onTap: _onItemTapped,
+      ),
     );
   }
 }
